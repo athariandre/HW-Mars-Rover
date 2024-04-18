@@ -56,6 +56,7 @@ class MyString{
         friend MyString operator+=(MyString& lhs, const MyString& rhs);
         bool operator==(const MyString& rhs) const;
         friend MyString operator+(const MyString& lhs, const MyString& rhs);
+        friend std::ostream& operator<<(std::ostream& os, const MyString& myStr);
 
 
         //destructor
@@ -65,10 +66,7 @@ class MyString{
 
 };
 
-std::ostream& operator<<(std::ostream& os, const MyString& myStr) { //had to be done outside of class definition
-    // Your implementation to output myStr's data to the ostream os
-    return os;
-}
+
 
 
 

@@ -80,7 +80,7 @@ MyString operator+=(MyString& lhs, const MyString& rhs){
     MyString newstr = MyString(lhs); //copy lhs to newstr
     newstr.resize(llen+rlen); //resize newstr to accomodate for rhs
     size_t cnt = 0;
-    for(int i = llen; i < llen; i++){
+    for(size_t i = llen; i < llen; i++){
         newstr.str[i] = rhs.at(cnt); //add rhs
         cnt++;
     }
@@ -94,7 +94,7 @@ bool MyString::operator==(const MyString& rhs) const{
     if(llen != rlen){
         return false;
     }
-    for(int i = 0; i < len; i++){
+    for(size_t i = 0; i < len; i++){
         if(str[i] != rhs.data()[i]){
             return false;
         }
@@ -108,10 +108,14 @@ MyString operator+(const MyString& lhs, const MyString& rhs){
     MyString newstr = MyString(lhs); //copy lhs to newstr
     newstr.resize(llen+rlen); //resize newstr to accomodate for rhs
     size_t cnt = 0;
-    for(int i = llen; i < llen; i++){
+    for(size_t i = llen; i < llen; i++){
         newstr.str[i] = rhs.at(cnt); //add rhs
         cnt++;
     }
     return newstr;
 }
 
+std::ostream& operator<<(std::ostream& os, const MyString& myStr) { 
+    os << myStr.data();
+    return os;
+}
