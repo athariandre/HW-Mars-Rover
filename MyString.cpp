@@ -34,7 +34,7 @@ void MyString::resize(int n){ //double free occuring here
 
 const char& MyString::at (int pos) const{
     if(pos >= len){
-        throw std::invalid_argument("Attempted access to an out-of-bound index (index " + std::to_string(pos) + " in string of length " + std::to_string(len));
+        throw std::out_of_range("Attempted access to an out-of-bound index (index " + std::to_string(pos) + " in string of length " + std::to_string(len));
     }
     else{
         return str[pos];
