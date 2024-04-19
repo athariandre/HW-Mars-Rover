@@ -68,30 +68,25 @@ int MyString::find (const MyString& substr, int pos) const{
 }
 
 MyString& MyString::operator=(const MyString& rhs){
-    MyString * newstrr = new MyString();
-    MyString newstr = *newstrr;
-    newstr.str = rhs.str;
-    newstr.len = rhs.len;
-    newstr.cap = rhs.cap;
+    str = rhs.str;
+    len = rhs.len;
+    cap = rhs.cap;
     
-    return newstr;
+    return *this;
 }
 
-MyString MyString::operator+=(const MyString& rhs){
-    int llen = len;
+MyString operator+=(MyString& lhs, const MyString& rhs){
+    int llen = lhs.len;
     int rlen = rhs.len;
-    MyString * newstrr = new MyString();
-    MyString newstr = *newstrr;
-    newstr.resize(len+rlen); //resize str to accomodate for rhs
+    MyString newstr = MyString(lhs); //copy lhs to newstr
+    newstr.resize(llen+rlen+1); //resize newstr to accomodate for rhs
     int cnt = 0;
-    for(int i = 0; i < llen; i++){
-        newstr.str[i] = str[i];
-    }
     for(int i = llen; i < llen; i++){
-        newstr.str[i] = rhs.str[cnt]; //add rhs
+        newstr.str[i] = rhs.at(cnt); //add rhs
         cnt++;
     }
-    return *newstrr;
+    lhs = newstr;
+    return lhs;
 }
 
 bool MyString::operator==(const MyString& rhs) const{

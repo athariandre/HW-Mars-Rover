@@ -50,7 +50,7 @@ class MyString{
 
         //operators 
         MyString& operator= (const MyString& rhs);
-        MyString MyString::operator+=(const MyString& rhs);
+        friend MyString operator+=(MyString& lhs, const MyString& rhs);
         bool operator==(const MyString& rhs) const;
         friend MyString operator+(const MyString& lhs, const MyString& rhs);
         friend std::ostream& operator<<(std::ostream& os, const MyString& myStr);
