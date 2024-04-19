@@ -16,17 +16,28 @@ int stoi(const MyString& str) { // just doing base 10 here
 	return result;
 }
 
+void printMyString(MyString str, const char name[]){
+	cout << "\nPRINTING " << name << "\n===============" << endl;
+	if(str.length() == 0){
+		cout << "!!! MYSTRING HAS LENGTH 0 !!!" << endl;
+	}
+	for(int i = 0; i < str.length(); i++){
+		cout << "str[" << i << "] = " << str.data()[i] << " | is type " << typeid(str.data()[i]).name() << " with integer value " << (int)str.data()[i] << endl;
+	}
+	cout<< "\n===============\n" << endl;
+}
+
 // helper function for insertion allows reading from input stream to MyString
 istream& operator>>(istream& is, MyString& str) {
-	str.clear();
+	str.clear(); 
 	while (!is.eof()) {
 		char c;
 		is >> std::noskipws >> c; // use the noskipws manipulator
 		if (isspace(c) || is.fail()) break; // if whitespace, can stop adding to string
 		const char* newstr = new char[2] {c, '\0'};
-		MyString newc = MyString(newstr); // MyString: copy constructor
-		delete[] newstr;
-		str += newc; // MyString: operator+=()
+		MyString newc = MyString(newstr); // MyString: copy constructor potential issue
+		delete[] newstr; 
+		str += newc; // MyString: 
 	}
 	return is;
 }
@@ -37,17 +48,18 @@ int main () {
 	MyString filename; // MyString: default constructor
 	cin >> filename; // operator>> is provided above
 
+	
 	ifstream commands(filename.data()); // MyString: data() return const char* type (otherwise, have to implement ifstream constructor for MyString type)
 
+	printMyString(filename.data(), "filename data");
+	
 	if (!commands.is_open()) {
 		cout << "Unable to open file" << endl;
 		return 1;
 	}
 
 	// setup test rover
-	cout << "pre rover" << endl;
 	Rover testRover;
-	cout << "post rover" << endl;
 
 	// read commands
 	MyString comm;

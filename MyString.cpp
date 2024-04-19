@@ -5,31 +5,22 @@
 using std::cout, std::endl;
 
 
-void MyString::resize(int n){ //double free occuring here
-    if(n < len){
-        char* temp = new char[n+1];
-        for(int i = 0; i < n; i++){
-            temp[i] = str[i];
-        }
-        temp[n] = '\0'; //set null-terminator
-        delete str; //clear old arr memory (to prevent leaks)
-        str = temp; //update arr
-        len = n;
-        cap = n+1;
-        return;
+void MyString::resize(int n){ //writing an overflow
+
+    int final_len = n;
+    if(len < final_len){
+        final_len = len;
     }
-    else{
-        char* temp = new char[n+1];
-        for(int i = 0; i < len; i++){
-            temp[i] = str[i]; //copy every item to 
-        }
-        temp[n] = '\0'; //set null-terminator
-        delete str; //clear old arr memory (to prevent leaks)
-        str = temp; //update arr
-        len = n;
-        cap = n+1;
-        return;
+
+    char* temp = new char[n+1];
+    for(int i = 0; i < final_len; i++){
+        temp[i] = str[i];
     }
+    delete[] str; //clear old arr memory (to prevent leaks)
+    temp[n] = '\0'; //set null-terminator
+    str = temp; //update arr
+    len = n;
+    cap = n+1;
 }
 
 const char& MyString::at (int pos) const{
@@ -41,8 +32,8 @@ const char& MyString::at (int pos) const{
     }
 }
 
-void MyString::clear(){
-    delete str;
+void MyString::clear(){ //potential issue
+    delete[] str;
     str = new char[1];
     str[0] = '\0';
     len = 0;
@@ -77,15 +68,13 @@ MyString& MyString::operator=(const MyString& rhs){
 
 MyString operator+=(MyString& lhs, const MyString& rhs){
     int llen = lhs.len;
-    int rlen = rhs.len;
-    MyString newstr = MyString(lhs); //copy lhs to newstr
-    newstr.resize(llen+rlen+1); //resize newstr to accomodate for rhs
+    int rlen = rhs.len; 
+    lhs.resize(llen+rlen); //resize newstr to accomodate for rhs
     int cnt = 0;
-    for(int i = llen; i < llen; i++){
-        newstr.str[i] = rhs.at(cnt); //add rhs
+    for(int i = llen; i < lhs.size(); i++){
+        lhs.str[i] = rhs.data()[cnt]; //add rhs
         cnt++;
     }
-    lhs = newstr;
     return lhs;
 }
 

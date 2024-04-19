@@ -12,7 +12,7 @@ class MyString{
         //constructors
         MyString() : str(new char[1]{'\0'}), len(0), cap(0) {}
         
-        MyString(const MyString& string){ //copying from another string
+        MyString(const MyString& string){ //copying from another string (POTENTIAL ISSUE)
             this->len = string.len;
             this->cap = string.cap;
             this->str = new char[cap+1];
