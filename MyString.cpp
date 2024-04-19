@@ -12,7 +12,7 @@ void MyString::resize(int n){ //double free occuring here
             temp[i] = str[i];
         }
         temp[n] = '\0'; //set null-terminator
-        delete[] str; //clear old arr memory (to prevent leaks)
+        delete str; //clear old arr memory (to prevent leaks)
         str = temp; //update arr
         len = n;
         cap = n+1;
@@ -24,7 +24,7 @@ void MyString::resize(int n){ //double free occuring here
             temp[i] = str[i]; //copy every item to 
         }
         temp[n] = '\0'; //set null-terminator
-        delete[] str; //clear old arr memory (to prevent leaks)
+        delete str; //clear old arr memory (to prevent leaks)
         str = temp; //update arr
         len = n;
         cap = n+1;
@@ -42,7 +42,7 @@ const char& MyString::at (int pos) const{
 }
 
 void MyString::clear(){
-    delete[] str;
+    delete str;
     str = new char[1];
     str[0] = '\0';
     len = 0;
