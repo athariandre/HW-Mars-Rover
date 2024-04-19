@@ -68,7 +68,8 @@ int MyString::find (const MyString& substr, int pos) const{
 }
 
 MyString& MyString::operator=(const MyString& rhs){
-    MyString newstr = MyString(rhs);
+    MyString * newstrr = new MyString();
+    MyString newstr = *newstrr;
     newstr.str = rhs.str;
     newstr.len = rhs.len;
     newstr.cap = rhs.cap;
