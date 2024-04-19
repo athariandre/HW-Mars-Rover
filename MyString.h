@@ -4,8 +4,8 @@
 class MyString{
     private:
         char* str;
-        size_t len;
-        size_t cap;
+        int len;
+        int cap;
 
     public:
         //constructors
@@ -19,7 +19,7 @@ class MyString{
             len = string.len;
             cap = string.cap;
             str = new char[cap+1];
-            for(size_t i = 0; i < cap; i++){
+            for(int i = 0; i < cap; i++){
                 str[i] = string.str[i];
             }
         }
@@ -31,7 +31,7 @@ class MyString{
             cap = len;
             str = new char[cap+1];
 
-            for(size_t i = 0; i < len; i++){
+            for(int i = 0; i < len; i++){
                 str[i] = string[i];
             }
 
@@ -40,16 +40,16 @@ class MyString{
         }
         
         //functions
-        void resize (size_t n);
-        size_t capacity() const {return cap;}
-        size_t size() const {return len;}
-        size_t length() const {return len;}
+        void resize (int n);
+        int capacity() const {return cap;}
+        int size() const {return len;}
+        int length() const {return len;}
         const char* data() const {return str;}
         bool empty() const {return (len==0);}
         const char& front() const {return str[0];}
-        const char& at (size_t pos) const;
+        const char& at (int pos) const;
         void clear();
-        size_t find (const MyString& substr, size_t pos = 0) const;
+        int find (const MyString& substr, int pos = 0) const;
 
         //operators 
         MyString& operator= (const MyString& rhs);
@@ -61,7 +61,7 @@ class MyString{
 
         //destructor
         ~MyString(){
-            delete[] this->str;
+            delete[] str;
         }
 
 };

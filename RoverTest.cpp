@@ -45,7 +45,9 @@ int main () {
 	}
 
 	// setup test rover
+	cout << "pre rover" << endl;
 	Rover testRover;
+	cout << "post rover" << endl;
 
 	// read commands
 	MyString comm;

@@ -1,37 +1,38 @@
 # include <iostream>
+# include <stdexcept>
 # include "MyString.h"
 
 using std::cout, std::endl;
 
 
-void MyString::resize(size_t n){
+void MyString::resize(int n){ //double free occuring here
     if(n < len){
         char* temp = new char[n+1];
-        for(size_t i = 0; i < n; i++){
+        for(int i = 0; i < n; i++){
             temp[i] = str[i];
         }
         temp[n] = '\0'; //set null-terminator
         delete[] str; //clear old arr memory (to prevent leaks)
         str = temp; //update arr
-        delete[] temp; //delete temp arr
-        temp = nullptr; //prevent hanging pointer (not neccessarily needed, temp "despawns" after function definition left)
+        len = n;
+        cap = n+1;
         return;
     }
     else{
         char* temp = new char[n+1];
-        for(size_t i = 0; i < len; i++){
+        for(int i = 0; i < len; i++){
             temp[i] = str[i]; //copy every item to 
         }
         temp[n] = '\0'; //set null-terminator
         delete[] str; //clear old arr memory (to prevent leaks)
         str = temp; //update arr
-        delete[] temp; //delete temp arr
-        temp = nullptr; //prevent hanging pointer (not necessarily needed, temp "despawns" after function definition left)
+        len = n;
+        cap = n+1;
         return;
     }
 }
 
-const char& MyString::at (size_t pos) const{
+const char& MyString::at (int pos) const{
     if(pos >= len){
         throw std::invalid_argument("Attempted access to an out-of-bound index (index " + std::to_string(pos) + " in string of length " + std::to_string(len));
     }
@@ -48,12 +49,12 @@ void MyString::clear(){
     cap = 0;
 }
 
-size_t MyString::find (const MyString& substr, size_t pos) const{
-    size_t search_len = substr.size();
+int MyString::find (const MyString& substr, int pos) const{
+    int search_len = substr.size();
     bool match = false;
-    for(size_t i = pos; i <= (len - search_len); i++){
+    for(int i = pos; i <= (len - search_len); i++){
         match = true;
-        for(size_t j = 0; j < search_len; j++){
+        for(int j = 0; j < search_len; j++){
             if(str[i+j] != substr.data()[j]){
                 match = false;
                 break;
@@ -63,7 +64,7 @@ size_t MyString::find (const MyString& substr, size_t pos) const{
             return i;
         }
     }
-    return (size_t)-1;
+    return (int)-1;
 }
 
 MyString& MyString::operator=(const MyString& rhs){
@@ -75,12 +76,12 @@ MyString& MyString::operator=(const MyString& rhs){
 }
 
 MyString operator+=(MyString& lhs, const MyString& rhs){
-    size_t llen = lhs.len;
-    size_t rlen = rhs.len;
+    int llen = lhs.len;
+    int rlen = rhs.len;
     MyString newstr = MyString(lhs); //copy lhs to newstr
-    newstr.resize(llen+rlen); //resize newstr to accomodate for rhs
-    size_t cnt = 0;
-    for(size_t i = llen; i < llen; i++){
+    newstr.resize(llen+rlen+1); //resize newstr to accomodate for rhs
+    int cnt = 0;
+    for(int i = llen; i < llen; i++){
         newstr.str[i] = rhs.at(cnt); //add rhs
         cnt++;
     }
@@ -89,12 +90,12 @@ MyString operator+=(MyString& lhs, const MyString& rhs){
 }
 
 bool MyString::operator==(const MyString& rhs) const{
-    size_t llen = len;
-    size_t rlen = rhs.len;
+    int llen = len;
+    int rlen = rhs.len;
     if(llen != rlen){
         return false;
     }
-    for(size_t i = 0; i < len; i++){
+    for(int i = 0; i < len; i++){
         if(str[i] != rhs.data()[i]){
             return false;
         }
@@ -103,12 +104,12 @@ bool MyString::operator==(const MyString& rhs) const{
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs){
-    size_t llen = lhs.len;
-    size_t rlen = rhs.len;
+    int llen = lhs.len;
+    int rlen = rhs.len;
     MyString newstr = MyString(lhs); //copy lhs to newstr
     newstr.resize(llen+rlen); //resize newstr to accomodate for rhs
-    size_t cnt = 0;
-    for(size_t i = llen; i < llen; i++){
+    int cnt = 0;
+    for(int i = llen; i < llen; i++){
         newstr.str[i] = rhs.at(cnt); //add rhs
         cnt++;
     }
