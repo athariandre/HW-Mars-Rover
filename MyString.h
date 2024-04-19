@@ -10,18 +10,14 @@ class MyString{
 
     public:
         //constructors
-        MyString(){ //default constructor
-            cap = 0;
-            str = new char[1];
-            str[0] = '\0';
-            len = 0;
-        }
+        MyString() : str(new char[1]{'\0'}), len(0), cap(0) {}
+        
         MyString(const MyString& string){ //copying from another string
-            len = string.len;
-            cap = string.cap;
-            str = new char[cap+1];
+            this->len = string.len;
+            this->cap = string.cap;
+            this->str = new char[cap+1];
             for(int i = 0; i < cap; i++){
-                str[i] = string.str[i];
+                this->str[i] = string.str[i];
             }
         }
         MyString(const char string[]){ //copying from a c-string (char array)
