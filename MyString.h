@@ -41,7 +41,7 @@ class MyString{
         void resize (int n);
         int capacity() const {return cap;}
         int size() const {return len;}
-        int length() const {return len;}
+        int length() const {return len*sizeof(char);}
         const char* data() const {return str;}
         bool empty() const {return (len==0);}
         const char& front() const {return str[0];}
