@@ -15,11 +15,12 @@ class MyString{
         MyString(const MyString& string){ //copying from another string (POTENTIAL ISSUE)
             this->len = string.len;
             this->cap = string.cap;
-            this->str = new char[cap+1];
-            for(int i = 0; i < cap; i++){
+            this->str = new char[string.cap];
+            for(int i = 0; i < string.cap; i++){
                 this->str[i] = string.str[i];
             }
         }
+
         MyString(const char string[]){ //copying from a c-string (char array)
             len = 0;
             while(string[this->len] != '\0'){
