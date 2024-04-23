@@ -10,7 +10,11 @@ class MyString{
 
     public:
         //constructors
-        MyString() : str(new char[1]{'\0'}), len(0), cap(1) {}
+        MyString(){
+            this->cap = 1;
+            this->len = 0;
+            this->str = new char[1]{'\0'};
+        }
         
         MyString(const MyString& string){ //copying from another string (POTENTIAL ISSUE)
             this->len = string.len;
