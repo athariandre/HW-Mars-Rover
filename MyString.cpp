@@ -71,7 +71,7 @@ MyString& MyString::operator=(const MyString& rhs){
 MyString operator+=(MyString& lhs, const MyString& rhs){ //remake
     int llen = lhs.len;
     int rlen = rhs.len; 
-    lhs.resize(lhs.cap+rhs.cap); //resize newstr to accomodate for rhs
+    lhs.resize(lhs.len+rhs.len); //resize newstr to accomodate for rhs
     int cnt = 0;
     for(int i = llen; i < lhs.size(); i++){
         lhs.str[i] = rhs.str[cnt]; //add rhs
