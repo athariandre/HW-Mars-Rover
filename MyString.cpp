@@ -98,11 +98,13 @@ bool operator==(const MyString& lhs, const MyString& rhs){
 MyString operator+(const MyString& lhs, const MyString& rhs){
     MyString newstr; //copy lhs to newstr
     newstr.len = lhs.len + rhs.len;
-    newstr.cap = newstr.len+1;
-    int cnt = 0;
+    newstr.cap = lhs.len + rhs.len + 1;
+
     for(int i = 0; i < lhs.len; i++){
-        newstr.str[i] = rhs.at(i); //add rhs
+        newstr.str[i] = lhs.at(i); //add rhs
     }
+
+    int cnt = 0;
     for(int i = lhs.len; i < newstr.len; i++){
         newstr.str[i] = rhs.at(cnt);
         cnt++;
