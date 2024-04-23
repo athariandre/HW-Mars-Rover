@@ -2,6 +2,7 @@
 # include <fstream>
 # include "Rover.h"
 # include "MyString.h"
+# include <typeinfo>
 using std::cin, std::cout, std::endl, std::ifstream, std::istream;
 
 // helper function "stoi" to converts MyString to int, works a lot like number slicing in reverse
@@ -21,9 +22,13 @@ void printMyString(MyString str, const char name[]){
 	if(str.length() == 0){
 		cout << "!!! MYSTRING HAS LENGTH 0 !!!" << endl;
 	}
-	for(int i = 0; i < str.length(); i++){
-		cout << "str[" << i << "] = " << str.data()[i] << " | is type " << typeid(str.data()[i]).name() << " with integer value " << (int)str.data()[i] << endl;
+	int i = 0;
+	cout << "str.length() is " << str.length() << " and str.capacity() is " << str.capacity() << endl;
+	while(str.at(i) != '\0'){
+		cout << "str[" << i << "] = " << str.at(i) << " | is type " << typeid(str.data()[i]).name() << " with integer value " << (int)str.data()[i] << endl;
+		i++;
 	}
+	cout << "nullptr @ str[" << i << "]" << endl;
 	cout<< "\n===============\n" << endl;
 }
 
@@ -45,14 +50,20 @@ istream& operator>>(istream& is, MyString& str) {
 
 int main () {
 	// open command file
+
 	MyString filename; // MyString: default constructor
 	cin >> filename; // operator>> is provided above
 
-	
+	printMyString(filename, "filename data"); //no nullptr @ the end
+
+	cout << filename.size() << endl;
+
+	cout << filename.data() << endl;
+
 	ifstream commands(filename.data()); // MyString: data() return const char* type (otherwise, have to implement ifstream constructor for MyString type)
 
-	printMyString(filename.data(), "filename data");
 	
+
 	if (!commands.is_open()) {
 		cout << "Unable to open file" << endl;
 		return 1;

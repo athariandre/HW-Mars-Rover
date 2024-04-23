@@ -5,22 +5,22 @@
 using std::cout, std::endl;
 
 
-void MyString::resize(int n){ //writing an overflow
-
-    int final_len = n;
-    if(len < final_len){
-        final_len = len;
+void MyString::resize(int n){ //REMAKE
+    int smaller_len = n;
+    if(len < smaller_len){
+        smaller_len = len;
     }
 
     char* temp = new char[n+1];
-    for(int i = 0; i < final_len; i++){
+    for(int i = 0; i < smaller_len; i++){
         temp[i] = str[i];
     }
-    delete[] str; //clear old arr memory (to prevent leaks)
+     
     temp[n] = '\0'; //set null-terminator
-    str = temp; //update arr
     len = n;
     cap = n+1;
+    delete[] str; //clear old arr memory (to prevent leaks)
+    str = temp; //update arr
 }
 
 const char& MyString::at (int pos) const{
@@ -32,7 +32,7 @@ const char& MyString::at (int pos) const{
     }
 }
 
-void MyString::clear(){ //potential issue
+void MyString::clear(){ //REMAKE
     delete[] str;
     str = new char[1];
     str[0] = '\0';
@@ -66,13 +66,13 @@ MyString& MyString::operator=(const MyString& rhs){
     return *this;
 }
 
-MyString operator+=(MyString& lhs, const MyString& rhs){
+MyString operator+=(MyString& lhs, const MyString& rhs){ //remake
     int llen = lhs.len;
     int rlen = rhs.len; 
-    lhs.resize(llen+rlen); //resize newstr to accomodate for rhs
+    lhs.resize(llen+rlen+1); //resize newstr to accomodate for rhs
     int cnt = 0;
     for(int i = llen; i < lhs.size(); i++){
-        lhs.str[i] = rhs.data()[cnt]; //add rhs
+        lhs.str[i] = rhs.str[cnt]; //add rhs
         cnt++;
     }
     return lhs;
