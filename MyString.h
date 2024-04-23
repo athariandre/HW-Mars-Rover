@@ -26,8 +26,8 @@ class MyString{
             while(string[this->len] != '\0'){
                 len++;
             }
-            cap = len;
-            str = new char[cap+1];
+            cap = len+1;
+            str = new char[cap];
 
             for(int i = 0; i < len; i++){
                 str[i] = string[i];
