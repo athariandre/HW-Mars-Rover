@@ -37,7 +37,7 @@ class MyString{
                 str[i] = string[i];
             }
 
-            str[cap] = '\0';
+            str[len] = '\0';
 
         }
         
