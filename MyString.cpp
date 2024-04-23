@@ -59,9 +59,11 @@ int MyString::find (const MyString& substr, int pos) const{
 }
 
 MyString& MyString::operator=(const MyString& rhs){
-    str = rhs.str;
-    len = rhs.len;
-    cap = rhs.cap;
+    resize(rhs.size());
+
+    for(int i = 0; i < rhs.size(); i++){
+        str[i] = rhs.at(i);
+    }
     
     return *this;
 }
@@ -69,23 +71,24 @@ MyString& MyString::operator=(const MyString& rhs){
 MyString operator+=(MyString& lhs, const MyString& rhs){ //remake
     int llen = lhs.len;
     int rlen = rhs.len; 
-    lhs.resize(llen+rlen+1); //resize newstr to accomodate for rhs
+    lhs.resize(lhs.cap+rhs.cap); //resize newstr to accomodate for rhs
     int cnt = 0;
     for(int i = llen; i < lhs.size(); i++){
         lhs.str[i] = rhs.str[cnt]; //add rhs
         cnt++;
     }
+    lhs.str[lhs.size()] = '\0';
     return lhs;
 }
 
-bool MyString::operator==(const MyString& rhs) const{
-    int llen = len;
+bool operator==(const MyString& lhs, const MyString& rhs){
+    int llen = lhs.len;
     int rlen = rhs.len;
     if(llen != rlen){
         return false;
     }
-    for(int i = 0; i < len; i++){
-        if(str[i] != rhs.data()[i]){
+    for(int i = 0; i < lhs.size(); i++){
+        if(lhs.at(i) != rhs.at(i)){
             return false;
         }
     }
@@ -93,19 +96,25 @@ bool MyString::operator==(const MyString& rhs) const{
 }
 
 MyString operator+(const MyString& lhs, const MyString& rhs){
-    int llen = lhs.len;
-    int rlen = rhs.len;
-    MyString newstr = MyString(lhs); //copy lhs to newstr
-    newstr.resize(llen+rlen); //resize newstr to accomodate for rhs
+    MyString newstr; //copy lhs to newstr
+    newstr.len = lhs.len + rhs.len;
+    newstr.cap = lhs.cap + rhs.cap;
     int cnt = 0;
-    for(int i = llen; i < llen; i++){
-        newstr.str[i] = rhs.at(cnt); //add rhs
+    for(int i = 0; i < lhs.len; i++){
+        newstr.str[i] = rhs.at(i); //add rhs
+    }
+    for(int i = lhs.len; i < newstr.len; i++){
+        newstr.str[i] = rhs.at(cnt);
         cnt++;
     }
+
+    newstr.str[newstr.len] = '\0';
     return newstr;
 }
 
 std::ostream& operator<<(std::ostream& os, const MyString& myStr) { 
-    os << myStr.data();
+    for(int i = 0; i < myStr.len; i++){
+        os << myStr.at(i);
+    }
     return os;
 }
