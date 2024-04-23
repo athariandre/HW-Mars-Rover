@@ -98,7 +98,7 @@ bool operator==(const MyString& lhs, const MyString& rhs){
 MyString operator+(const MyString& lhs, const MyString& rhs){
     MyString newstr; //copy lhs to newstr
     newstr.len = lhs.len + rhs.len;
-    newstr.cap = lhs.cap + rhs.cap;
+    newstr.cap = newstr.len+1;
     int cnt = 0;
     for(int i = 0; i < lhs.len; i++){
         newstr.str[i] = rhs.at(i); //add rhs
